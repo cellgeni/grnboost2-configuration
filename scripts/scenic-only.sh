@@ -2,24 +2,23 @@
 
 set -euo pipefail
 
+CONFIG=../conf/scenic-only.config
+
 DATA="${1:?Please provide path to data}"
 PROJECT="${2:-scenic-only}"
 OUTDIR="${3:-scenic-only-results}"
 
-### DO NOT CHANGE BELOW ###
-
 ## Need to set nextflow variables in order to correctly run on Sanger FARM Cellular Genetics Informatics Nextflow Installation
 
-export NXF_SINGULARITY_LIBRARYDIR=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/singularity_folder/
-export NXF_SINGULARITY_CACHEDIR=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/cache/
-export NXF_SINGULARITY_TMPDIR=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/tmp/
+export NXF_SINGULARITY_LIBRARYDIR=/nfs/cellgeni/grnboost2-stuff/singularity_folder
+export NXF_SINGULARITY_CACHEDIR=/nfs/cellgeni/grnboost2-stuff/cache
+export NXF_SINGULARITY_TMPDIR=/nfs/cellgeni/grnboost2-stuff/tmp
 export NXF_VER=21.04.3
-export XDG_RUNTIME_DIR=/nfs/users/nfs_c/cellgeni-su/xdg_dir/
+export XDG_RUNTIME_DIR=/nfs/users/nfs_c/cellgeni-su/xdg_dir
 
-## Running on stephanes previously generated data
-## PLEASE NOTE: converted stephanes .h5ad to a loom file
+## SCENIC ONLY RUN SCRIPT
 
-nextflow -C scenic-only.config               \
+nextflow -C $CONFIG                          \
     run vib-singlecell-nf/vsn-pipelines      \
     --ansi-log false                         \
     -resume                                  \
