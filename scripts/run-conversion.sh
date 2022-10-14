@@ -9,7 +9,6 @@ output_path="${2:-conversion_output}"
 
 #Change hard paths to local version if cloning repo
 im=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/github_repo/grnboost2-conversion.sif
-#im=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/github_repo/working.sif
 script=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/github_repo/converting-h5ad.R
 
 mkdir -p $output_path
