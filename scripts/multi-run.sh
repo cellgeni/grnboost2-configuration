@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-CONFIG=../conf/multi-run.config
-
 DATA="${1:?Please provide path to data}"
 PROJECT="${2:-multi-run}"
 OUTDIR="${3:-multi-run-results}"
@@ -18,17 +16,19 @@ export XDG_RUNTIME_DIR=/nfs/users/nfs_c/cellgeni-su/xdg_dir
 
 ## MULTI RUN SCRIPT
 
-nextflow -C $CONFIG                          \
-    run vib-singlecell-nf/vsn-pipelines      \
-    --ansi-log false                         \
-    -resume                                  \
-    -w "${PROJECT}_work"                     \
-    -entry single_sample_scenic              \
-    --data.tenx.cellranger_mex $DATA         \
-    --global.project_name $PROJECT           \
-    --global.outdir $OUTDIR                  \
-    --tools.scanpy.filter.outdir $OUTDIR     \
-    --tools.scenic.outdir "${OUTDIR}/scenic" \
+nextflow -C multi-run.config                                              \
+    run vib-singlecell-nf/vsn-pipelines                                   \
+    --ansi-log false                                                      \
+    -resume                                                               \
+    -with-trace "${PROJECT}_reports/trace.txt"                            \
+    -with-report "${PROJECT}_reports/report.html"                         \
+    -w "${PROJECT}_work"                                                  \
+    -entry single_sample_scenic                                           \
+    --global.outdir $OUTDIR                                               \
+    --global.project_name $PROJECT                                        \
+    --tools.scanpy.filter.outdir $OUTDIR                                  \
+    --tools.scenic.scenicoutdir "${OUTDIR}/scenic"                        \
+    --data.tenx.cellranger_mex $DATA                                      \
     --timeline.file "${OUTDIR}/nextflow_reports/execution_timeline.html"  \
     --report.file "${OUTDIR}/nextflow_reports/execution_report.html"      \
     --trace.file "${OUTDIR}/nextflow_reports/execution_trace.txt"         \

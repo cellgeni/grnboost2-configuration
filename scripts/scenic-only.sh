@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-CONFIG=../conf/scenic-only.config
-
 DATA="${1:?Please provide path to data}"
 PROJECT="${2:-scenic-only}"
 OUTDIR="${3:-scenic-only-results}"
@@ -18,18 +16,19 @@ export XDG_RUNTIME_DIR=/nfs/users/nfs_c/cellgeni-su/xdg_dir
 
 ## SCENIC ONLY RUN SCRIPT
 
-nextflow -C $CONFIG                          \
-    run vib-singlecell-nf/vsn-pipelines      \
-    --ansi-log false                         \
-    -resume                                  \
-    -w "${PROJECT}_work"                     \
-    -entry scenic                            \
-    --data.loom.file_paths $DATA             \
-    --tools.scenic.filteredLoom $DATA        \
-    --global.project_name $PROJECT           \
-    --global.outdir $OUTDIR                  \
-    --tools.scanpy.filter.outdir $OUTDIR     \
-    --tools.scenic.outdir "${OUTDIR}/scenic" \
+nextflow -C scenic-only.config                                            \
+    run vib-singlecell-nf/vsn-pipelines                                   \
+    --ansi-log false                                                      \
+    -resume                                                               \
+    -with-trace "${PROJECT}_reports/trace.txt"                            \
+    -with-report "${PROJECT}_reports/report.html"                         \
+    -w "${PROJECT}_work"                                                  \
+    -entry scenic                                                         \
+    --global.outdir $OUTDIR                                               \
+    --global.project_name $PROJECT                                        \
+    --tools.scenic.scenicoutdir "${OUTDIR}/scenic"                        \
+    --tools.scenic.filteredLoom $DATA                                     \
+    --data.loom.file_paths $DATA                                          \
     --timeline.file "${OUTDIR}/nextflow_reports/execution_timeline.html"  \
     --report.file "${OUTDIR}/nextflow_reports/execution_report.html"      \
     --trace.file "${OUTDIR}/nextflow_reports/execution_trace.txt"         \
