@@ -1,6 +1,8 @@
 # grnboost2-configuration
 Repository for storing general use configuration files for grnboost2
 
+These scripts execute the vsn-pipelines nextflow pipeline: https://vsn-pipelines.readthedocs.io
+
 There are 3 modes for running grnboost2 in this repo.
 
 The most popular will be `scenic-only.sh` which runs the grnboost2 processes without any preprocessing
