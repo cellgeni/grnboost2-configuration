@@ -1,0 +1,15 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-reticulate
+  - loompy
+  - anndata
+  - r-seurat=4
+  - bioconductor-loomexperiment
+  - r-deldir[version='>=1.0.2']
+  - bioconductor-singlecellexperiment
+  - r-monocle3
+  - r-sceasy
+  - r-r.utils

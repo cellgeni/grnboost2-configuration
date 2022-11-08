@@ -1,14 +1,31 @@
-FROM rocker/r-ver:4.0.4
-RUN apt-get update && apt-get install -y liblzma-dev libbz2-dev zlib1g libpng-dev libxml2-dev \
-    gfortran-7 libglpk-dev libhdf5-dev libcurl4-openssl-dev python3.8 python3-dev python3-pip
+FROM ubuntu:18.04
 
-RUN pip3 install numpy pandas umap-learn leidenalg igraph anndata regex
-RUN Rscript -e "install.packages(c('BiocManager', 'devtools', 'R.utils', 'reticulate', 'ggrepel'))"
-RUN Rscript -e "BiocManager::install(c('Rhtslib', 'LoomExperiment', 'SingleCellExperiment'))"
-RUN Rscript -e "devtools::install_github(c('cellgeni/sceasy@v0.0.6', 'satijalab/seurat-data'))"
-RUN Rscript -e "install.packages(c('hdf5r','dimRed','png','ggplot2','reticulate','plotly','Matrix','network','leiden', 'Seurat'))" 
-RUN Rscript -e "install.packages('SeuratObject')"
-RUN Rscript -e "devtools::install_github('mojaveazure/seurat-disk')"
+ENV DEBIAN_FRONTEND=noninteractive
 
-ENTRYPOINT ["bash"]
+COPY conda.yml /tmp/conda.yml
 
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends apt-utils
+
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends build-essential software-properties-common wget 
+
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh
+
+ENV PATH="/opt/conda/condabin:${PATH}"
+
+RUN conda update -n base conda && \
+    conda config --add channels conda-forge && \
+    conda config --add channels bioconda
+
+RUN conda env update -n base --file /tmp/conda.yml 
+
+RUN conda install -y -n base -c conda-forge r-base="4.1.3"
+
+RUN conda install -y -n base -c conda-forge r-rlang
+
+RUN conda install -y -n base -c conda-forge r-spatstat.utils
+
+ENV PATH="/opt/conda/bin:${PATH}"
