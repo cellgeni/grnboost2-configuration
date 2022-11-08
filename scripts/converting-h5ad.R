@@ -1,6 +1,5 @@
 library(sceasy)
 library(Seurat)
-library(SeuratDisk)
 theargs <- R.utils::commandArgs(asValues=TRUE)
 input_h5ad <- theargs$input
 output_path <- theargs$output
