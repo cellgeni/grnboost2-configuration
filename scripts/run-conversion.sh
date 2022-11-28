@@ -4,12 +4,12 @@ set -euo pipefail
 
 #This script converts h5ad to loom file which is expected input for scenic only pipeline mode
 
-input_path="${1:?Please provide path to h5ad}"
-output_path="${2:-conversion_output}"
+script="${1:?Please provide path to converting-h5ad.R}"
+input_path="${2:?Please provide path to h5ad}"
+output_path="${3:-conversion_output}"
 
 #Change hard paths to local version if cloning repo
-im=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/github_repo/grnboost2-conversion.sif
-script=/lustre/scratch117/cellgen/cellgeni/simon/grnboost2-testing/github_repo/converting-h5ad.R
+im=/nfs/cellgeni/singularity/images/grnboost.sif
 
 mkdir -p $output_path
 
