@@ -3,7 +3,9 @@ Repository for storing general use configuration files for grnboost2
 
 These scripts execute the vsn-pipelines nextflow pipeline: https://vsn-pipelines.readthedocs.io
 
-Firstly, ensure the pipeline is downloaded using `nextflow pull vib-singlecell-nf/vsn-pipelines`
+Some slight alterations have been made to the repository for Sanger specific analysis. Please contact the Cellular Genetics Informatics team to discuss of you want to run the pipeline yourself.
+
+A singularity image generated from the dockerfile is available on the FARM at: `/nfs/cellgeni/singularity/images/grnboost.sif`
 
 There are 3 modes for running grnboost2 in this repo.
 
