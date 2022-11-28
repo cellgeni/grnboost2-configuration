@@ -8,7 +8,7 @@ Some slight alterations have been made to the repository for Sanger specific ana
 
 Next, you will need to alter the script to point to the cloned repository `main.nf` i.e:
 
-`nextlfow run -C /path/to/config run /path/to/cloned/repo/main.nf`
+`nextflow run -C /path/to/config run /path/to/cloned/repo/main.nf`
 
 A singularity image generated from the dockerfile is available on the FARM at: `/nfs/cellgeni/singularity/images/grnboost.sif`
 
