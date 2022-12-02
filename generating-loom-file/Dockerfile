@@ -1,18 +1,13 @@
-FROM rocker/r-ver:4.0.4
+ARG ubuntu_version=20.04
 
-RUN apt-get update && apt-get install -y liblzma-dev libbz2-dev zlib1g libpng-dev libxml2-dev \
-    gfortran-7 libglpk-dev libhdf5-dev libcurl4-openssl-dev img2pdf python3.8 python3-dev python3-pip
+FROM ubuntu:$ubuntu_version
 
-RUN pip3 install numpy==1.20.1 pandas umap-learn leidenalg igraph anndata regex
+ENV DEBIAN_FRONTEND=noninteractive 
 
-RUN Rscript -e "install.packages(c('BiocManager', 'devtools', 'R.utils', 'reticulate', 'processx'))"
+RUN apt-get update && apt-get install -y cmake 
 
-RUN Rscript -e "BiocManager::install(c('Rhtslib', 'LoomExperiment', 'SingleCellExperiment', 'clusterProfiler', 'org.Hs.eg.db'))"
+RUN set -xe && apt-get -y update \
+    && apt-get -y install python3.8 python3-dev python3-pip python-is-python3
 
-RUN Rscript -e "devtools::install_github(c('cellgeni/sceasy', 'satijalab/seurat-data'))"
-
-RUN Rscript -e "install.packages(c('hdf5r','dimRed','png','ggplot2','reticulate','plotly','Matrix','network','leiden', 'Seurat', 'gplots', 'SoupX'))"
-
-RUN Rscript -e "install.packages('SeuratObject')"
-
-RUN Rscript -e "devtools::install_github('mojaveazure/seurat-disk')"
+RUN pip3 install --upgrade pip \
+    && pip3 install --upgrade --no-cache scanpy==1.7.1 loompy==3.0.6 argparse
