@@ -8,7 +8,7 @@ input_path="${3:?Please provide path to h5ad}"
 output_path="${4:-conversion_output}"
 
 #Change hard paths to local version if cloning repo
-im=/nfs/cellgeni/singularity/images/grnboost.sif
+im=/nfs/cellgeni/singularity/images/grnboost-anndata2loom-scanpy_v1.7.1-loompy_v3.0.6.sif
 
 mkdir -p $output_path
 mkdir -p logs
